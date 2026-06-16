@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KLM Afvalscheiding – Professionele Cursus voor Monteurs</title>
 
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,9 +30,7 @@
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        *,
-        *::before,
-        *::after {
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -50,10 +47,8 @@
             color: var(--zwart);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ──────────────── Skip link ──────────────── */
         .skip-link {
             position: absolute;
             top: -100px;
@@ -73,7 +68,6 @@
             outline-offset: 2px;
         }
 
-        /* ──────────────── Voortgangsbalk ──────────────── */
         .progress-bar-container {
             position: sticky;
             top: 0;
@@ -90,7 +84,6 @@
             border-radius: 0 3px 3px 0;
         }
 
-        /* ──────────────── Sticky navigatie ──────────────── */
         .sticky-nav {
             position: sticky;
             top: 6px;
@@ -128,7 +121,6 @@
             border-color: var(--klm-blauw);
         }
 
-        /* ──────────────── Hero ──────────────── */
         .hero {
             background: linear-gradient(rgba(0, 32, 82, 0.65), rgba(0, 32, 82, 0.8)),
                 url('https://www.biltz.nl/wp-content/uploads/2020/02/MSF7339-Pano_fullsize-scaled.jpg') center/cover;
@@ -162,7 +154,6 @@
             text-transform: uppercase;
         }
 
-        /* ──────────────── Sectie-headers ──────────────── */
         .section-header {
             background: var(--klm-blauw);
             padding: 48px 24px;
@@ -181,7 +172,6 @@
             font-size: 1.1rem;
         }
 
-        /* ──────────────── Content secties ──────────────── */
         section.content-section {
             max-width: 1100px;
             margin: 0 auto;
@@ -193,7 +183,6 @@
             color: var(--klm-blauw);
         }
 
-        /* ──────────────── Grid & Cards ──────────────── */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -222,8 +211,6 @@
             color: var(--donkergrijs);
             font-size: 0.95rem;
         }
-
-        /* Gekleurde randen voor bakken */
         .card.blue {
             border-left: 6px solid var(--bak-blauw);
         }
@@ -250,7 +237,6 @@
             background: #FFF5F5;
         }
 
-        /* ──────────────── Knoppen ──────────────── */
         .btn {
             display: inline-block;
             background: var(--klm-lichtblauw);
@@ -295,22 +281,7 @@
             font-size: 0.85rem;
             border-radius: 20px;
         }
-        .btn-danger {
-            background: #e74c3c;
-            box-shadow: 0 4px 14px rgba(231, 76, 60, 0.3);
-        }
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-        .btn-warning {
-            background: #F57C00;
-            box-shadow: 0 4px 14px rgba(245, 124, 0, 0.3);
-        }
-        .btn-warning:hover {
-            background: #E65100;
-        }
 
-        /* ──────────────── Drag & Drop oefening ──────────────── */
         .exercise-wrapper {
             display: flex;
             gap: 32px;
@@ -340,34 +311,21 @@
             transition: var(--transition);
             user-select: none;
             -webkit-user-select: none;
-            border: 2px dashed transparent;
+            border: 2px solid transparent;
             display: flex;
             align-items: center;
             gap: 10px;
-            touch-action: manipulation;
+            touch-action: none;
         }
         .draggable:hover {
             box-shadow: var(--schaduw-hover);
             border-color: var(--klm-lichtblauw);
         }
         .draggable.dragging {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: grabbing;
             border-color: var(--klm-lichtblauw);
             background: #e8f4fd;
-            transform: scale(0.97);
-        }
-        .draggable.dragging-touch {
-            opacity: 0.6;
-            position: fixed;
-            z-index: 999;
-            pointer-events: none;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-            transform: scale(1.05);
-            background: #fffef0;
-            border: 2px solid var(--klm-lichtblauw);
-            width: auto;
-            max-width: 250px;
         }
         .draggable.placed {
             opacity: 0.5;
@@ -391,17 +349,16 @@
             color: #555;
             position: relative;
         }
-        .bin.highlight-good {
+        .bin.drag-over {
             background: #d4edda;
             border-color: #4CAF50;
             border-style: solid;
-            animation: pulse-green 0.6s ease;
         }
-        .bin.highlight-bad {
+        .bin.drag-over-wrong {
             background: #fce4e4;
             border-color: #e74c3c;
             border-style: solid;
-            animation: shake 0.5s ease;
+            animation: shake 0.4s ease;
         }
         .bin.blue {
             border-left: 8px solid var(--bak-blauw);
@@ -414,6 +371,18 @@
         }
         .bin.red {
             border-left: 8px solid var(--bak-rood);
+        }
+        .bin.highlight-good {
+            background: #d4edda;
+            border-color: #4CAF50;
+            border-style: solid;
+            animation: pulse-green 0.6s ease;
+        }
+        .bin.highlight-bad {
+            background: #fce4e4;
+            border-color: #e74c3c;
+            border-style: solid;
+            animation: shake 0.5s ease;
         }
 
         @keyframes pulse-green {
@@ -448,7 +417,6 @@
             margin-top: 16px;
             font-weight: 600;
             min-height: 28px;
-            transition: var(--transition);
             font-size: 1.05rem;
         }
         .exercise-feedback.success {
@@ -465,7 +433,6 @@
             flex-wrap: wrap;
         }
 
-        /* ──────────────── Quiz ──────────────── */
         .quiz-container {
             background: var(--wit);
             border-radius: var(--radius);
@@ -497,7 +464,7 @@
             text-align: left;
             font-size: 1rem;
         }
-        .quiz-option:hover {
+        .quiz-option:hover:not(:disabled) {
             border-color: var(--klm-lichtblauw);
             background: #f8fbff;
         }
@@ -535,7 +502,6 @@
             margin-top: 16px;
         }
 
-        /* ──────────────── Footer ──────────────── */
         footer {
             background: var(--klm-blauw);
             color: var(--wit);
@@ -568,7 +534,6 @@
             margin-top: 12px;
         }
 
-        /* ──────────────── Responsive ──────────────── */
         @media (max-width: 700px) {
             .hero {
                 padding: 100px 20px 70px;
@@ -607,15 +572,12 @@
 </head>
 <body>
 
-    <!-- Skip link voor toetsenbordgebruikers -->
     <a href="#home" class="skip-link">Direct naar inhoud</a>
 
-    <!-- Voortgangsbalk -->
     <div class="progress-bar-container" aria-hidden="true">
         <div class="progress-bar-fill" id="progressBar"></div>
     </div>
 
-    <!-- Sticky navigatie -->
     <nav class="sticky-nav" aria-label="Cursus navigatie">
         <a href="#home" data-section="home">🏠 Home</a>
         <a href="#waarom" data-section="waarom">❓ Waarom</a>
@@ -626,7 +588,6 @@
         <a href="#bedankt" data-section="bedankt">✅ Klaar</a>
     </nav>
 
-    <!-- ────────── HOME ────────── -->
     <header class="hero" id="home">
         <div class="subtitle">KLM Group • Technische Dienst</div>
         <h1>Afvalscheiding voor Monteurs</h1>
@@ -656,7 +617,6 @@
         </div>
     </section>
 
-    <!-- ────────── WAAROM ────────── -->
     <div class="section-header" id="waarom">
         <h2>Waarom afval scheiden?</h2>
         <p>Drie pijlers: Milieu, Kosten & Veiligheid</p>
@@ -679,10 +639,9 @@
         <a class="btn" href="#gevaren">Volgende stap → Gevaren</a>
     </section>
 
-    <!-- ────────── GEVAREN ────────── -->
     <div class="section-header" id="gevaren" style="background: #B71C1C;">
         <h2>⚠️ Gevaren van verkeerd afval</h2>
-        <p>Dit gebeurt er als we niet scheiden</p>
+        <p>Dit gebeurt er als we niet goed scheiden</p>
     </div>
     <section class="content-section">
         <div class="grid">
@@ -704,12 +663,11 @@
             </div>
         </div>
         <div style="background:#fff3e0; padding:16px 20px; border-radius:var(--radius); border-left:6px solid #E65100; margin-bottom:20px;">
-            <p style="font-weight:600; color:#BF360C;">KLM-regel: <em>"Bij twijfel? Gebruik de rode bak of vraag het aan je leidinggevende. Veiligheid gaat boven alles."</em></p>
+            <p style="font-weight:600; color:#BF360C;">KLM-regel: <em>"Bij twijfel? Vraag het aan je leidinggevende. Gevaarlijk afval hoort altijd in de juiste, daarvoor bestemde bak. Veiligheid gaat boven alles."</em></p>
         </div>
         <a class="btn" href="#bakken">Volgende stap → De bakken</a>
     </section>
 
-    <!-- ────────── BAKKEN ────────── -->
     <div class="section-header" id="bakken">
         <h2>De vier afvalbakken</h2>
         <p>Herken ze aan de kleur op de werkvloer</p>
@@ -730,33 +688,31 @@
             </div>
             <div class="card red">
                 <h3>🔴 Rood – Gevaarlijk afval</h3>
-                <p>Olie, smeermiddelen, batterijen, verfresten, chemicaliën, oplosmiddelen. <strong>Altijd</strong> in de speciale rode container. Gebruik handschoenen en volg de veiligheidsvoorschriften.</p>
+                <p>Olie, smeermiddelen, batterijen, verfresten, chemicaliën, oplosmiddelen. <strong>Dit moet altijd in de juiste, daarvoor bestemde container.</strong> Gebruik handschoenen en volg de veiligheidsvoorschriften.</p>
             </div>
         </div>
         <a class="btn" href="#oefenen">Volgende stap → Oefenen</a>
     </section>
 
-    <!-- ────────── OEFENING ────────── -->
     <div class="section-header" id="oefenen">
         <h2>Oefening: Sleep het afval naar de juiste bak</h2>
         <p>Versleep elk item naar de bijbehorende bak</p>
     </div>
     <section class="content-section">
         <div class="exercise-wrapper" id="exerciseContainer">
-            <!-- Items om te slepen -->
             <div class="items-panel">
                 <h3>📦 Afvalitems</h3>
                 <div id="itemsList">
-                    <div class="draggable" draggable="true" data-type="papier" id="item-papier" aria-grabbed="false">
+                    <div class="draggable" draggable="true" data-type="papier" id="item-papier">
                         📄 Papieren handdoek
                     </div>
-                    <div class="draggable" draggable="true" data-type="plastic" id="item-plastic" aria-grabbed="false">
+                    <div class="draggable" draggable="true" data-type="plastic" id="item-plastic">
                         🥤 Plastic beker
                     </div>
-                    <div class="draggable" draggable="true" data-type="organisch" id="item-organisch" aria-grabbed="false">
+                    <div class="draggable" draggable="true" data-type="organisch" id="item-organisch">
                         🍎 Appelklokhuis
                     </div>
-                    <div class="draggable" draggable="true" data-type="gevaarlijk" id="item-gevaarlijk" aria-grabbed="false">
+                    <div class="draggable" draggable="true" data-type="gevaarlijk" id="item-gevaarlijk">
                         🛢️ Oliefilter
                     </div>
                 </div>
@@ -766,19 +722,18 @@
                 </div>
             </div>
 
-            <!-- Doelbakken -->
             <div class="bins-panel">
                 <h3>🗑️ Afvalbakken</h3>
-                <div class="bin blue" data-accept="papier" id="bin-papier" aria-label="Blauwe bak voor papier">
+                <div class="bin blue" data-accept="papier" id="bin-papier">
                     🔵 Blauw – Papier
                 </div>
-                <div class="bin yellow" data-accept="plastic" id="bin-plastic" aria-label="Gele bak voor plastic">
+                <div class="bin yellow" data-accept="plastic" id="bin-plastic">
                     🟡 Geel – Plastic
                 </div>
-                <div class="bin green" data-accept="organisch" id="bin-organisch" aria-label="Groene bak voor organisch afval">
+                <div class="bin green" data-accept="organisch" id="bin-organisch">
                     🟢 Groen – Organisch
                 </div>
-                <div class="bin red" data-accept="gevaarlijk" id="bin-gevaarlijk" aria-label="Rode bak voor gevaarlijk afval">
+                <div class="bin red" data-accept="gevaarlijk" id="bin-gevaarlijk">
                     🔴 Rood – Gevaarlijk
                 </div>
             </div>
@@ -787,7 +742,6 @@
         <a class="btn" href="#test" style="margin-top: 20px;">Volgende stap → Eindtest</a>
     </section>
 
-    <!-- ────────── EINDTEST ────────── -->
     <div class="section-header" id="test">
         <h2>Eindtest</h2>
         <p>Test je kennis met deze quiz</p>
@@ -806,7 +760,6 @@
         </div>
     </section>
 
-    <!-- ────────── BEDANKT ────────── -->
     <div class="section-header" id="bedankt">
         <h2>✅ Bedankt voor het volgen van de cursus!</h2>
     </div>
@@ -817,7 +770,7 @@
         <p style="color:var(--donkergrijs); font-size:1.05rem;">Bij twijfel? Kijk naar de kleur van de bak of vraag het aan je leidinggevende.</p>
         <div style="margin-top:24px; background:#e8f4fd; padding:20px; border-radius:var(--radius); max-width:500px; margin-left:auto; margin-right:auto;">
             <p style="font-weight:600; color:var(--klm-blauw);">📌 KLM Veiligheidsregel:</p>
-            <p style="color:var(--donkergrijs);">"Gevaarlijk afval altijd in de rode bak – nooit bij het restafval. Zo beschermen we onszelf en onze collega's."</p>
+            <p style="color:var(--donkergrijs);">"Gevaarlijk afval hoort altijd in de juiste, daarvoor bestemde bak. Nooit bij het restafval. Zo beschermen we onszelf en onze collega's."</p>
         </div>
         <a class="btn" href="#home" style="margin-top:20px;">🏠 Terug naar home</a>
     </section>
@@ -829,4 +782,72 @@
             <br><span>— KLM Technisch Team</span>
         </div>
         <div>
-            © 2026 KLM Afvalscheiding – Professionele Cursus voor Monteurs
+            © 2026 KLM Afvalscheiding – Professionele Cursus voor Monteurs &nbsp;|&nbsp;
+            <a href="#home">Terug naar boven ↑</a>
+        </div>
+        <div class="copyright">Alle rechten voorbehouden. KLM Group.</div>
+    </footer>
+
+    <script>
+        (function() {
+            // ──────────────────────────────────────
+            // Voortgangsbalk & actieve navigatie
+            // ──────────────────────────────────────
+            const progressBar = document.getElementById('progressBar');
+            const navLinks = document.querySelectorAll('.sticky-nav a');
+            const sections = [];
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const el = document.querySelector(href);
+                    if (el) sections.push({ id: href.substring(1), el, link });
+                }
+            });
+
+            function updateProgressAndNav() {
+                const scrollY = window.scrollY + 100;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = Math.min(100, Math.round((window.scrollY / docHeight) * 100));
+                progressBar.style.width = progress + '%';
+
+                let activeId = sections.length > 0 ? sections[0].id : null;
+                sections.forEach(s => {
+                    const top = s.el.getBoundingClientRect().top + window.scrollY;
+                    if (scrollY >= top - 80) {
+                        activeId = s.id;
+                    }
+                });
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    const id = href ? href.substring(1) : '';
+                    if (id === activeId) {
+                        link.classList.add('nav-active');
+                    } else {
+                        link.classList.remove('nav-active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateProgressAndNav, { passive: true });
+            window.addEventListener('resize', updateProgressAndNav, { passive: true });
+            updateProgressAndNav();
+
+            // ──────────────────────────────────────
+            // Drag & Drop (volledig werkend)
+            // ──────────────────────────────────────
+            const draggables = document.querySelectorAll('.draggable');
+            const bins = document.querySelectorAll('.bin');
+            const exerciseFeedback = document.getElementById('exerciseFeedback');
+            const resetBtn = document.getElementById('resetExercise');
+            const itemsList = document.getElementById('itemsList');
+            let correctCount = 0;
+            const totalItems = draggables.length;
+            let dragData = null;
+
+            function updateFeedback() {
+                if (correctCount === totalItems) {
+                    exerciseFeedback.textContent = '🎉 Uitstekend! Alle items zijn correct gesorteerd!';
+                    exerciseFeedback.className = 'exercise-feedback success';
+                } else {
+                    exerciseFeedback.textContent = `✅ ${correctCount} van de ${totalItems} items goed geplaatst.`;
+                    exerciseFeedback.class
