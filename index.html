@@ -851,3 +851,169 @@
                 } else {
                     exerciseFeedback.textContent = `✅ ${correctCount} van de ${totalItems} items goed geplaatst.`;
                     exerciseFeedback.class
+                                // ──────────────────────────────────────
+            // SLOT - Zorg dat alles correct werkt
+            // ──────────────────────────────────────
+            
+            // Controleer of alle items correct zijn geplaatst bij laden
+            function checkInitialState() {
+                const placedItems = document.querySelectorAll('.draggable.placed');
+                if (placedItems.length === totalItems) {
+                    exerciseFeedback.textContent = '🎉 Uitstekend! Alle ' + totalItems + ' items zijn correct gesorteerd!';
+                    exerciseFeedback.className = 'exercise-feedback success';
+                    correctCount = totalItems;
+                }
+            }
+
+            // Voeg touch-ondersteuning toe voor mobiele apparaten
+            let touchDragItem = null;
+            let touchClone = null;
+            let touchOffsetX = 0;
+            let touchOffsetY = 0;
+
+            document.querySelectorAll('.draggable:not(.placed)').forEach(item => {
+                item.addEventListener('touchstart', function(e) {
+                    if (this.classList.contains('placed')) return;
+                    
+                    const touch = e.touches[0];
+                    const rect = this.getBoundingClientRect();
+                    touchOffsetX = touch.clientX - rect.left;
+                    touchOffsetY = touch.clientY - rect.top;
+                    
+                    touchDragItem = this;
+                    this.classList.add('dragging');
+                    
+                    // Maak een clone voor visuele feedback
+                    touchClone = this.cloneNode(true);
+                    touchClone.style.position = 'fixed';
+                    touchClone.style.pointerEvents = 'none';
+                    touchClone.style.zIndex = '9999';
+                    touchClone.style.width = rect.width + 'px';
+                    touchClone.style.opacity = '0.8';
+                    touchClone.style.transform = 'scale(1.05)';
+                    touchClone.style.border = '2px solid var(--klm-lichtblauw)';
+                    touchClone.style.background = '#fffef0';
+                    touchClone.style.boxShadow = '0 12px 40px rgba(0,0,0,0.25)';
+                    touchClone.style.borderRadius = 'var(--radius-sm)';
+                    touchClone.style.padding = '14px 16px';
+                    touchClone.style.fontWeight = '500';
+                    touchClone.style.display = 'flex';
+                    touchClone.style.alignItems = 'center';
+                    touchClone.style.gap = '10px';
+                    document.body.appendChild(touchClone);
+                    
+                    updateTouchPosition(touch.clientX, touch.clientY);
+                }, { passive: true });
+
+                item.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                    if (!touchDragItem || !touchClone) return;
+                    
+                    const touch = e.touches[0];
+                    updateTouchPosition(touch.clientX, touch.clientY);
+                    
+                    // Check welke bak onder de vinger zit
+                    const elementUnderFinger = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const bin = elementUnderFinger ? elementUnderFinger.closest('.bin') : null;
+                    
+                    bins.forEach(b => {
+                        b.classList.remove('drag-over', 'drag-over-wrong');
+                        b.style.background = '';
+                        b.style.borderColor = '';
+                        b.style.borderStyle = '';
+                    });
+                    
+                    if (bin && touchDragItem) {
+                        if (touchDragItem.dataset.type === bin.dataset.accept) {
+                            bin.classList.add('drag-over');
+                        } else {
+                            bin.classList.add('drag-over-wrong');
+                        }
+                    }
+                }, { passive: false });
+
+                item.addEventListener('touchend', function(e) {
+                    if (!touchDragItem) return;
+                    
+                    // Vind de bak onder de vinger bij loslaten
+                    const touch = e.changedTouches[0];
+                    const elementUnderFinger = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const bin = elementUnderFinger ? elementUnderFinger.closest('.bin') : null;
+                    
+                    // Verwijder clone
+                    if (touchClone && touchClone.parentNode) {
+                        touchClone.parentNode.removeChild(touchClone);
+                    }
+                    touchClone = null;
+                    
+                    // Verwijder drag-over klassen
+                    bins.forEach(b => {
+                        b.classList.remove('drag-over', 'drag-over-wrong');
+                        b.style.background = '';
+                        b.style.borderColor = '';
+                        b.style.borderStyle = '';
+                    });
+                    
+                    if (bin && touchDragItem && !touchDragItem.classList.contains('placed')) {
+                        const itemType = touchDragItem.dataset.type;
+                        
+                        if (itemType === bin.dataset.accept) {
+                            // Correct
+                            bin.classList.add('highlight-good');
+                            touchDragItem.classList.add('placed');
+                            touchDragItem.classList.remove('dragging');
+                            correctCount++;
+                            updateFeedback();
+                            if (touchDragItem.parentNode === itemsList) {
+                                itemsList.removeChild(touchDragItem);
+                                bin.appendChild(touchDragItem);
+                            }
+                            setTimeout(() => {
+                                bin.classList.remove('highlight-good');
+                            }, 800);
+                        } else {
+                            // Wrong
+                            bin.classList.add('highlight-bad');
+                            setTimeout(() => {
+                                bin.classList.remove('highlight-bad');
+                            }, 800);
+                        }
+                    }
+                    
+                    touchDragItem.classList.remove('dragging');
+                    touchDragItem = null;
+                }, { passive: true });
+            });
+
+            function updateTouchPosition(x, y) {
+                if (touchClone) {
+                    touchClone.style.left = (x - touchOffsetX) + 'px';
+                    touchClone.style.top = (y - touchOffsetY) + 'px';
+                }
+            }
+
+            // Initialiseer de feedback bij laden
+            checkInitialState();
+
+            // ──────────────────────────────────────
+            // Extra: Toon een melding als alle items goed zijn
+            // ──────────────────────────────────────
+            const observer = new MutationObserver(function() {
+                const placedItems = document.querySelectorAll('.draggable.placed');
+                if (placedItems.length === totalItems && correctCount === totalItems) {
+                    exerciseFeedback.textContent = '🎉 Uitstekend! Alle ' + totalItems + ' items zijn correct gesorteerd!';
+                    exerciseFeedback.className = 'exercise-feedback success';
+                }
+            });
+
+            // Observeer veranderingen in de itemsList
+            observer.observe(itemsList, { childList: true, subtree: true });
+
+            console.log('✅ Cursus volledig geladen! Alles werkt nu naar behoren.');
+            console.log('📊 Totaal aantal items: ' + totalItems);
+            console.log('🎯 Veel succes met de cursus!');
+
+        })();
+    </script>
+</body>
+</html>
